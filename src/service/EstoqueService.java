@@ -18,7 +18,7 @@ public class EstoqueService {
         }
 
         produtos.add(produto);
-        System.out.println("PRODUTO CADASTRADO COM SUCESSO!");
+        System.out.println("--PRODUTO CADASTRADO COM SUCESSO!--");
         System.out.println("Produto: " + produto.getNome());
         System.out.println("Código: " + produto.getCodigo());
         return true;
@@ -97,7 +97,7 @@ public class EstoqueService {
         Produto produto = buscarProduto(codigo);
         if (produto != null) {
             produtos.remove(produto);
-            System.out.println("Produto" + produto.getNome()+" id:" + produto.getCodigo() + " removido.");
+            System.out.println(" Produto " + produto.getNome()+" id:" + produto.getCodigo() + " removido.");
         } else {
             System.out.println("Produto não encontrado.");
         }

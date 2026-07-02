@@ -2,6 +2,7 @@ package util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import builder.DiretorProduto;
@@ -119,18 +120,23 @@ public class Menu {
     private int lerCodigo() {
         int codigo;
         while (true) {
-            System.out.print("Código: ");
-            codigo = sc.nextInt();
-            sc.nextLine();
-            if (codigo <= 0) {
-                System.out.println("O código deve ser maior que zero.");
-                continue;
+            try {
+                System.out.print("Código: ");
+                codigo = sc.nextInt();
+                sc.nextLine();
+                if (codigo <= 0) {
+                    System.out.println("O código deve ser maior que zero.");
+                    continue;
+                }
+                if (estoque.buscarProduto(codigo) != null) {
+                    System.out.println("Já existe um produto cadastrado com esse código.");
+                    continue;
+                }
+                return codigo;
+            } catch (InputMismatchException e) {
+                System.out.println("Digite apenas números.");
+                sc.nextLine();
             }
-            if (estoque.buscarProduto(codigo) != null) {
-                System.out.println("Já existe um produto cadastrado com esse código.");
-                continue;
-            }
-            return codigo;
         }
     }
 
@@ -149,36 +155,53 @@ public class Menu {
     private double lerPreco() {
         double preco;
         while (true) {
-            System.out.print("Preço: ");
-            preco = sc.nextDouble();
-            if (preco > 0) {
-                return preco;
+            try {
+                System.out.print("Preço: ");
+                preco = sc.nextDouble();
+                if (preco > 0) {
+                    return preco;
+                }
+                System.out.println("Preço inválido.");
+            } catch (InputMismatchException e) {
+
+                System.out.println("Digite apenas números.");
+
+                sc.nextLine();
             }
-            System.out.println("Preço inválido.");
         }
     }
 
     private int lerQuantidade() {
         int quantidade;
         while (true) {
-            System.out.print("Quantidade: ");
-            quantidade = sc.nextInt();
-            if (quantidade >= 0) {
-                return quantidade;
+            try {
+                System.out.print("Quantidade: ");
+                quantidade = sc.nextInt();
+                if (quantidade >= 0) {
+                    return quantidade;
+                }
+                System.out.println("Quantidade inválida.");
+            } catch (InputMismatchException e) {
+                System.out.println("Digite apenas números.");
+                sc.nextLine();
             }
-            System.out.println("Quantidade inválida.");
         }
     }
 
     private int lerEstoqueMinimo() {
         int estoque;
         while (true) {
-            System.out.print("Estoque mínimo: ");
-            estoque = sc.nextInt();
-            if (estoque >= 0) {
-                return estoque;
+            try {
+                System.out.print("Estoque mínimo: ");
+                estoque = sc.nextInt();
+                if (estoque >= 0) {
+                    return estoque;
+                }
+                System.out.println("Estoque mínimo inválido.");
+            } catch (InputMismatchException e) {
+                System.out.println("Digite apenas números.");
+                sc.nextLine();
             }
-            System.out.println("Estoque mínimo inválido.");
         }
     }
 
@@ -219,6 +242,7 @@ public class Menu {
     }
 
     private String lerTelefoneFornecedor() {
+        sc.nextLine();
         String telefone;
         while (true) {
             System.out.print("Telefone do fornecedor: ");
@@ -245,32 +269,37 @@ public class Menu {
     }
 
     private String lerMarca() {
-    String marca;
+        String marca;
 
-    while (true) {
-        System.out.print("Marca: ");
-        marca = sc.nextLine();
+        while (true) {
+            System.out.print("Marca: ");
+            marca = sc.nextLine();
 
-        if (!marca.isBlank()) {
-            return marca;
+            if (!marca.isBlank()) {
+                return marca;
+            }
+
+            System.out.println("Informe a marca.");
         }
-
-        System.out.println("Informe a marca.");
     }
-}
 
-private int lerGarantia() {
-    int garantia;
+    private int lerGarantia() {
+        int garantia;
 
-    while (true) {
-        System.out.print("Garantia (meses): ");
-        garantia = sc.nextInt();
+        while (true) {
+            try {
+                System.out.print("Garantia (meses): ");
+                garantia = sc.nextInt();
 
-        if (garantia >= 0) {
-            return garantia;
+                if (garantia >= 0) {
+                    return garantia;
+                }
+
+                System.out.println("Garantia inválida.");
+            } catch (InputMismatchException e) {
+                System.out.println("Digite apenas números.");
+                sc.nextLine();
+            }
         }
-
-        System.out.println("Garantia inválida.");
     }
-}
 }
